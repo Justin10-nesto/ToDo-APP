@@ -1,8 +1,6 @@
 from functools import wraps
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
-from django.contrib.auth import authenticate
 
 def permission_required(permissions):
     def decorator(view_func):
