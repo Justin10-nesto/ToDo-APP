@@ -31,8 +31,6 @@ services:
     volumes:
       - .:/app
     restart: unless-stopped
-    depends_on:
-      - database
     networks:
       - proxy
     labels:
