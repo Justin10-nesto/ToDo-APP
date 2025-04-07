@@ -2,7 +2,9 @@
 from django.urls import path
 from . import views
 from .views import *
-urlpatterns = [
+urlpatterns = [ 
+
+    path('index/', views.index, name='index'),
 
     path('v1/auth/login/', loginView.as_view(),),
     path('v1/auth/logout/', logoutView.as_view(),),

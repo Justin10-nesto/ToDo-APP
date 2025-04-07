@@ -14,6 +14,9 @@ from rest_framework import generics, mixins
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 
+def index(request):
+    return Response("Hello world")
+
 class listUserMixin(mixins.ListModelMixin, generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
