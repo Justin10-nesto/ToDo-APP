@@ -57,18 +57,6 @@ services:
     volumes:
       - ./database:/var/lib/postgresql/data
 
-  nginx:
-    image: nginx
-    volumes:
-      - static_volume:/app/todo/staticfiles
-      - media_volume:/app/todo/media
-    ports:
-      - 8001:80
-    depends_on:
-      - todo
-    networks:
-      - proxy  # Added network configuration for nginx
-
 networks:
   proxy:
     external: true
