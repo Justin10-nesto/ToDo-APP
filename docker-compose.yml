@@ -39,3 +39,8 @@ services:
       - "traefik.http.routers.todo.tls=true"
       - "traefik.http.routers.todo.rule=Host(todo.tradesync.software)"
       - "traefik.http.routers.todo.entrypoints=websecure"
+
+networks:
+  proxy:
+    external: true
+    name: proxy
