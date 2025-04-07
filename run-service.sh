@@ -1,5 +1,5 @@
 #!/bin/sh
-docker network create proxy
+docker network create proxy || true
 
 touch acme.json && chmod 600 acme.json
 
