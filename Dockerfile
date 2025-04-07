@@ -37,7 +37,7 @@ RUN apk update && \
 COPY . /app/
 
 # Expose ports
-EXPOSE 8000 50052 5432
+EXPOSE 8000 5432
 
 # Ensure the entrypoint script is executable
 COPY ./entrypoint.sh /app/
