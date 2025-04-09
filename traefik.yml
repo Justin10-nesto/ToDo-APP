@@ -17,4 +17,5 @@ certificatesResolvers:
       email: jastinlasway10@gmail.com
       storage: acme.json
       httpChallenge:
-        entryPoint: web
+        entryPoint: websecure
+# Ensure the entryPoint matches the secure route

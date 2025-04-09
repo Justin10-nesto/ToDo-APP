@@ -7,4 +7,4 @@ docker compose down
 
 docker compose up --build -d
 
-docker compose exec hotel python manage.py migrate --noinput
+docker compose exec todo python manage.py migrate --noinput  # Ensure the correct service name

@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-v1g3_$)fpa6h8)b8_s+*r*$p9+b(dt=p$jmv2i52$c9lbgb$&m
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['todo.tradesync.software', 'localhost', '127.0.0.1', "*"] 
+ALLOWED_HOSTS = ['todo.tradesync.software', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

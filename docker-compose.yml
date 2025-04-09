@@ -1,4 +1,3 @@
-                                                                                   
 services:
   traefik:
     image: traefik:2.8
@@ -31,11 +30,11 @@ services:
     networks:
       - proxy
     ports:
-      - ${PORT}:${PORT}
+      - "8000:8000"  # Ensure the correct port mapping
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.port=80"
+      - "traefik.port=8000"
       - "traefik.http.routers.todo.tls=true"
       - "traefik.http.routers.todo.rule=Host(`todo.tradesync.software`)"
       - "traefik.http.routers.todo.entrypoints=websecure"

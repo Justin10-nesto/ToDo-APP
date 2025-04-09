@@ -1,4 +1,3 @@
-
 from django.urls import path
 from . import views
 from .views import *
@@ -8,7 +7,7 @@ urlpatterns = [
     path("v1/auth/login/", loginView.as_view(), name="login"),
     path("v1/auth/logout/", logoutView.as_view(), name="logout"),
 
-    path("users/", views.listUserMixin.as_view(), name="list_user_mixin"),
+    path("users/", views.listUser, name="list_user"),  # Ensure this endpoint is defined
     path("users/list/", views.listUser, name="list_user"),
     path("users/add/", views.addUser, name="add_user"),
     path("users/<str:pk>/", views.showUser, name="show_user"),
