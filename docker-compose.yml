@@ -30,14 +30,15 @@ services:
     networks:
       - proxy
     ports:
-      - "8000:8000"  # Ensure the correct port mapping
+      - "8000:8000"
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - "traefik.port=8000"
       - "traefik.http.routers.todo.tls=true"
       - "traefik.http.routers.todo.rule=Host(`todo.tradesync.software`)"
       - "traefik.http.routers.todo.entrypoints=websecure"
+      - "traefik.http.services.todo.loadbalancer.server.port=8000"
+      - "traefik.http.routers.todo.tls.certresolver=letsencrypt"  
 
 networks:
   proxy:
