@@ -18,6 +18,11 @@ services:
       - "traefik.docker.network=proxy"
       - "traefik.http.routers.traefik.service=traefik"
       - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.todo.tradesync.software`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls=true"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
 
   todo:
     build: .
@@ -38,7 +43,9 @@ services:
       - "traefik.http.routers.todo.rule=Host(`todo.tradesync.software`)"
       - "traefik.http.routers.todo.entrypoints=websecure"
       - "traefik.http.services.todo.loadbalancer.server.port=8000"
-      - "traefik.http.routers.todo.tls.certresolver=letsencrypt"  
+      - "traefik.http.routers.todo.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.todo-http.rule=Host(`todo.tradesync.software`)"
+      - "traefik.http.routers.todo-http.entrypoints=web"
 
 networks:
   proxy:

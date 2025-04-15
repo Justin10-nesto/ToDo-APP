@@ -4,6 +4,12 @@ api:
 entryPoints:
   web:
     address: ":80"
+    # Add HTTP to HTTPS redirect
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
   websecure:
     address: ":443"
 
@@ -17,5 +23,4 @@ certificatesResolvers:
       email: jastinlasway10@gmail.com
       storage: acme.json
       httpChallenge:
-        entryPoint: websecure
-# Ensure the entryPoint matches the secure route
+        entryPoint: web  # Make sure this is set to web (port 80)
