@@ -28,7 +28,8 @@ RUN apk update && \
     supervisor \
     libxslt-dev \
     linux-headers \
-    librdkafka-dev@edge && \
+    librdkafka-dev@edge \
+    netcat-openbsd && \
     pip install --upgrade pip && \
     pip install -r /app/requirements.txt && \
     pip install --upgrade markdown

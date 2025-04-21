@@ -3,6 +3,13 @@
 # Give the opportunity for Traefik to start up first
 sleep 5
 
+# Wait for database to be ready
+echo "Waiting for PostgreSQL..."
+while ! nc -z database 5432; do
+  sleep 1
+done
+echo "PostgreSQL started"
+
 python3 manage.py makemigrations  || echo "making Migration failed"
 
 python3 manage.py migrate || echo "Migration failed"
