@@ -16,8 +16,6 @@ services:
       - "traefik.enable=true"
       - "traefik.port=80"
       - "traefik.docker.network=public_net"
-      - "traefik.http.routers.traefik.service=traefik"
-      - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.dashboard.rule=Host(`traefik.todo.tradesync.software`)"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
@@ -42,13 +40,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=public_net"
-      - "traefik.http.routers.todo.tls=true"
-      - "traefik.http.routers.todo.rule=Host(`todo.tradesync.software`)"
-      - "traefik.http.routers.todo.entrypoints=websecure"
-      - "traefik.http.services.todo.loadbalancer.server.port=8000"
-      - "traefik.http.routers.todo.tls.certresolver=letsencrypt"
       - "traefik.http.routers.todo-http.rule=Host(`todo.tradesync.software`)"
       - "traefik.http.routers.todo-http.entrypoints=web"
+      - "traefik.http.routers.todo.rule=Host(`todo.tradesync.software`)"
+      - "traefik.http.routers.todo.entrypoints=websecure"
+      - "traefik.http.routers.todo.tls=true"
+      - "traefik.http.routers.todo.tls.certresolver=letsencrypt"
+      - "traefik.http.services.todo.loadbalancer.server.port=8000"
 
   database:
     image: postgres:14-alpine
@@ -63,10 +61,9 @@ services:
 
 networks:
   public_net:
-    name: public_net
+    external: true
   private_net:
-    name: private_net
-    internal: true
+    external: true
 
 volumes:
   postgres_data:
