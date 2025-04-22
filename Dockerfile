@@ -28,7 +28,8 @@ RUN apk update && \
     supervisor \
     libxslt-dev \
     linux-headers \
-    librdkafka-dev@edge && \
+    librdkafka-dev@edge \
+    netcat-openbsd && \
     pip install --upgrade pip && \
     pip install -r /app/requirements.txt && \
     pip install --upgrade markdown
@@ -37,7 +38,7 @@ RUN apk update && \
 COPY . /app/
 
 # Expose ports
-EXPOSE 8000 5432
+EXPOSE 8000
 
 # Ensure the entrypoint script is executable
 COPY ./entrypoint.sh /app/
