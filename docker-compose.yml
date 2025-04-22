@@ -4,7 +4,7 @@ services:
     container_name: traefik
     restart: unless-stopped
     networks:
-      - proxy
+      - public_net
     ports:
       - "80:80"
       - "443:443"
@@ -15,7 +15,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.port=80"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=public_net"
       - "traefik.http.routers.traefik.service=traefik"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.dashboard.rule=Host(`traefik.todo.tradesync.software`)"
@@ -33,12 +33,15 @@ services:
     env_file:
       - .env
     networks:
-      - proxy
+      - public_net
+      - private_net
     ports:
       - "8000:8000"
+    depends_on:
+      - database
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
+      - "traefik.docker.network=public_net"
       - "traefik.http.routers.todo.tls=true"
       - "traefik.http.routers.todo.rule=Host(`todo.tradesync.software`)"
       - "traefik.http.routers.todo.entrypoints=websecure"
@@ -47,7 +50,23 @@ services:
       - "traefik.http.routers.todo-http.rule=Host(`todo.tradesync.software`)"
       - "traefik.http.routers.todo-http.entrypoints=web"
 
+  database:
+    image: postgres:14-alpine
+    container_name: postgres_db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    networks:
+      - private_net
+
 networks:
-  proxy:
-    external: true
-    name: proxy
+  public_net:
+    name: public_net
+  private_net:
+    name: private_net
+    internal: true
+
+volumes:
+  postgres_data:
