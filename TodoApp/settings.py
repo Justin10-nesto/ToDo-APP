@@ -25,12 +25,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_spectacular',  # Add this for Swagger documentation
+    'django_filters',   # Add this for filtering
+    'corsheaders',      # Add this for CORS handling
     'ApiDevt'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Add CORS middleware before CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,6 +103,89 @@ MEDIA_ROOT = os.path.join(BASE, 'static/media')
 
 AUTOCOMMIT = True
 
+# REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+}
+
+# Spectacular settings for Swagger documentation
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Todo App API',
+    'DESCRIPTION': 'API documentation for Todo Application',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': r'/api/',
+    'CONTACT': {
+        'name': 'API Support',
+        'email': 'support@todoapp.com',
+    },
+    'LICENSE': {
+        'name': 'MIT',
+    },
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayRequestDuration': True,
+        'filter': True,
+    },
+    'TAGS': [
+        {'name': 'Auth', 'description': 'Authentication operations'},
+        {'name': 'Users', 'description': 'User management'},
+        {'name': 'Tasks', 'description': 'Task management operations'},
+        {'name': 'Task Categories', 'description': 'Category operations'},
+        {'name': 'Tags', 'description': 'Tag operations'},
+        {'name': 'Subtasks', 'description': 'Subtask operations'},
+        {'name': 'User Preferences', 'description': 'User preference settings'},
+        {'name': 'OTP Codes', 'description': 'OTP code operations'},
+    ],
+    'SECURITY': [
+        {
+            'Bearer': {
+                'type': 'apiKey',
+                'name': 'Authorization',
+                'in': 'header'
+            }
+        }
+    ],
+}
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # For development, in production specify domains
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
