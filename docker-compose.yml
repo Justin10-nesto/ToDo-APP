@@ -48,3 +48,4 @@ services:
 networks:
   public_net:
     name: public_net
+    external: true
