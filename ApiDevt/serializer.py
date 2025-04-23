@@ -2,6 +2,8 @@ from rest_framework import serializers, exceptions
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 import datetime
+from drf_spectacular.utils import extend_schema_field
+from typing import Dict, Any, Union, List, Optional
 from ApiDevt.models import Task, TaskCategory, OtpCode, SubTask, Tag, UserPreference
 
 
@@ -50,7 +52,8 @@ class UserSerializer(serializers.ModelSerializer):
             "password": {"write_only": True},
         }
     
-    def get_assigned_tasks_count(self, obj):
+    @extend_schema_field(int)
+    def get_assigned_tasks_count(self, obj) -> int:
         """Return the count of tasks assigned to this user."""
         return obj.assigned_tasks.filter(is_deleted=False).count()
 
@@ -97,7 +100,8 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "color", "date_created", "tasks_count"]
         read_only_fields = ["id", "date_created"]
     
-    def get_tasks_count(self, obj):
+    @extend_schema_field(int)
+    def get_tasks_count(self, obj) -> int:
         """Return the count of active tasks associated with this tag."""
         return obj.tasks.filter(is_deleted=False).count()
     
@@ -140,7 +144,8 @@ class TaskCategorySerializer(serializers.ModelSerializer):
         fields = ["id", "name", "date_created", "date_updated", "tasks_count"]
         read_only_fields = ["id", "date_created", "date_updated"]
     
-    def get_tasks_count(self, obj):
+    @extend_schema_field(int)
+    def get_tasks_count(self, obj) -> int:
         """Return the count of active tasks in this category."""
         return obj.tasks.filter(is_deleted=False).count()
 
@@ -184,7 +189,8 @@ class TaskListSerializer(serializers.ModelSerializer):
             "subtasks_count", "tags", "is_expired"
         ]
     
-    def get_subtasks_count(self, obj):
+    @extend_schema_field(int)
+    def get_subtasks_count(self, obj) -> int:
         return obj.subtasks.count()
 
 
@@ -299,7 +305,8 @@ class OtpCodeSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["id", "date_created", "date_updated", "status"]
     
-    def get_status(self, obj):
+    @extend_schema_field(str)
+    def get_status(self, obj) -> str:
         """Return the current status of the OTP code."""
         return obj.get_status()
 

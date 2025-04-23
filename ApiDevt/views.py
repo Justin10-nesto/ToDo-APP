@@ -30,6 +30,12 @@ from .serializer import (
     TaskDetailSerializer
 )
 
+# Add this new serializer for logout
+from rest_framework import serializers
+class LogoutSerializer(serializers.Serializer):
+    """Serializer for user logout."""
+    pass
+
 
 class IndexView(APIView):
     """
@@ -141,6 +147,7 @@ class LogoutView(APIView):
     @extend_schema(
         summary="User logout",
         description="Invalidate the user's authentication token",
+        request=LogoutSerializer,
         responses={
             200: OpenApiResponse(description="Successfully logged out"),
             500: OpenApiResponse(description="Logout error")

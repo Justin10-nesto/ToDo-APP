@@ -93,7 +93,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = ('%s/static'%BASE),
+# Create the static directory if it doesn't exist
+os.makedirs(os.path.join(BASE_DIR, 'static'), exist_ok=True)
+# Fix the STATICFILES_DIRS setting
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -162,6 +165,14 @@ SPECTACULAR_SETTINGS = {
             }
         }
     ],
+    'ENUM_NAME_OVERRIDES': {
+        'TaskStatusEnum': 'ApiDevt.models.Task.STATUS_CHOICES',
+        'TaskPriorityEnum': 'ApiDevt.models.Task.PRIORITY_CHOICES',
+        'TaskRecurringEnum': 'ApiDevt.models.Task.RECURRING_CHOICES',
+        'SubtaskStatusEnum': 'ApiDevt.models.SubTask.STATUS_CHOICES',
+        'UserPreferenceThemeEnum': 'ApiDevt.models.UserPreference.THEME_CHOICES',
+        'Status7bbEnum': 'ApiDevt.models.SubTask.STATUS_CHOICES',  # Add the collision resolution explicitly
+    }
 }
 
 # CORS settings

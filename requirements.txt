@@ -1,4 +1,3 @@
-
 Django
 django-cors-headers
 djangorestframework
@@ -17,3 +16,4 @@ python-decouple
 python-dotenv
 requests
 django-filter
+PyYAML>=6.0
