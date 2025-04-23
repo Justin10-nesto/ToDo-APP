@@ -8,10 +8,6 @@ ENV PYTHONUNBUFFERED=1
 # Set the working directory
 WORKDIR /app
 
-# Enable edge repos to get latest librdkafka
-RUN echo "@edge http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
-    echo "@edgecommunity http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
-
 # Install system dependencies and build tools
 COPY requirements.txt /app/
 RUN apk update && \
@@ -28,7 +24,6 @@ RUN apk update && \
     supervisor \
     libxslt-dev \
     linux-headers \
-    librdkafka-dev@edge \
     netcat-openbsd && \
     pip install --upgrade pip && \
     pip install -r /app/requirements.txt && \
