@@ -14,7 +14,8 @@ from .views import (
 )
 
 # Create a router and register our viewsets
-router = DefaultRouter()
+
+router = DefaultRouter(trailing_slash = False)
 router.register(r'users', UserViewSet)
 router.register(r'tasks', TaskViewSet)
 router.register(r'task-categories', TaskCategoryViewSet)
