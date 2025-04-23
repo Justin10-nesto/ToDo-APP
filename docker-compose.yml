@@ -34,11 +34,8 @@ services:
       - .env
     networks:
       - public_net
-      - private_net
     ports:
       - "8000:8000"
-    depends_on:
-      - database
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=public_net"
@@ -50,23 +47,6 @@ services:
       - "traefik.http.routers.todo-http.rule=Host(`todo.tradesync.software`)"
       - "traefik.http.routers.todo-http.entrypoints=web"
 
-  database:
-    image: postgres:14-alpine
-    container_name: postgres_db
-    restart: always
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .env
-    networks:
-      - private_net
-
 networks:
   public_net:
     name: public_net
-  private_net:
-    name: private_net
-    internal: true
-
-volumes:
-  postgres_data:
